@@ -35,6 +35,7 @@ class JobFactory extends Factory
             'address' => $this->faker->address,
             'category_id' => Category::all()->random(),
             'type' => 'fulltime',
+            'roles' => $this->faker->text(10),
             'status' => rand(0, 1),
             'description' => $this->faker->paragraph(3),
             'last_date' => $this->faker->dateTime

@@ -1,8 +1,17 @@
 @extends('layouts.app')
+
 @section('content')
-<div class="container">
-    <div class="row">
-        <h1>Recent Jobs</h1>
+    <div class="col-md-12">
+       <div class="company-profile">
+           <img src="" alt="Company Image" class="w-100">
+        <div class="company-desc">
+            <img src="" alt="Avatar" class="w-100">
+            <p>{{$company->description}}</p>
+             <h1>Name-{{$company->name}}</h1>
+            <p>Slogan-{{$company->slogan}}-&nbsp;Address-{{$company->address}}-&nbsp; Phone-{{$company->phone}}-&nbsp; Website-{{$company->website}}</p>
+        </div>
+       </div>
+    </div>
         <table class="table">
             <thead>
             <th></th>
@@ -12,7 +21,7 @@
             <th></th>
             </thead>
             <tbody>
-            @foreach ($jobs as $job)
+            @foreach ($company->jobs as $job)
                 <tr>
                     <td>
                         Avatar
@@ -31,14 +40,4 @@
             @endforeach
             </tbody>
         </table>
-    </div>
-</div>
-@endsection
-
-@section('style')
-    <style>
-        .icon{
-            color: #3f9ae5;
-        }
-    </style>
 @endsection

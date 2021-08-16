@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
-class RegisterController extends Controller
+class EmployerController extends Controller
 {
+    //
     /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+       |--------------------------------------------------------------------------
+       | Register Controller
+       |--------------------------------------------------------------------------
+       |
+       | This controller handles the registration of new users as well as their
+       | validation and creation. By default this controller uses a trait to
+       | provide this functionality without requiring any additional code.
+       |
+       */
 
     use RegistersUsers;
 
@@ -64,23 +66,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        $employer = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'user_type' => $data['user_type'] ?? ''
         ]);
-        $user->profile()->create([
-            'dob' => $data['dob'] ?? now(),
-            'gender' => $data['gender'] ?? '',
+        $employer->company()->create([
             'address' => $data['address'] ?? '',
-            'experience' => $data['experience'] ?? '',
-            'bio' => $data['bio'] ?? '',
-            'cover_letter' => $data['cover_letter'] ?? '',
-            'resume' => $data['resume'] ?? '',
-            'avatar' => $data['avatar'] ?? '',
-
+            'name' => $name = $data['name'],
+            'slug'=> Str::slug($name)
         ]);
-        return $user;
+        return $employer;
     }
 }
