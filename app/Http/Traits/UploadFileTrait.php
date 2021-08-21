@@ -6,15 +6,15 @@ use Illuminate\Support\Str;
 
 trait UploadFileTrait {
 
-    public function updateFile($type){
-        $coverLetter = \request()->file($type);
-        $extension = $coverLetter->getClientOriginalExtension();
-        $path = $coverLetter->storeAs($type,Str::of($coverLetter->getClientOriginalName())->basename('.'.$extension).'_'.Str::uuid().'.'.$extension);
-        $profile = auth()->user()->profile;
-        if(Storage::exists($profile->$type)){
-            Storage::delete($profile->$type);
+    public function updateFile($type, $typeObject = 'profile'){
+        $dataType = \request()->file($type);
+        $extension = $dataType->getClientOriginalExtension();
+        $path = $dataType->storeAs($type,Str::of($dataType->getClientOriginalName())->basename('.'.$extension).'_'.Str::uuid().'.'.$extension);
+        $object = auth()->user()->$typeObject;
+        if(Storage::exists($object->$type)){
+            Storage::delete($object->$type);
         }
-        $profile->update([
+        $object->update([
             $type =>  $path
         ]);
     }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\UploadFileTrait;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    use UploadFileTrait;
     /**
      * Display a listing of the resource.
      *
@@ -51,6 +54,18 @@ class CompanyController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showDetail(Company $company)
+    {
+        //
+        return view('companies.show-detail', compact('company'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -68,9 +83,48 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
         //
+        $data = $request->validate([
+           'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'website' => 'required',
+            'slogan' => '',
+            'description' => ''
+
+        ]);
+        try {
+            $company->update($data);
+        }catch (\Throwable $ex){
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+        return redirect()->back()->with('success', 'Update company successfully');
+    }
+
+    public function updateLogo(){
+        \request()->validate([
+           'logo' => 'image'
+        ]);
+        try {
+            $this->updateFile('logo', 'company');
+        }catch (\Throwable $ex){
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+        return redirect()->back()->with('success', 'Update logo company successfully');
+    }
+
+    public function updateCoverPhoto(){
+        \request()->validate([
+            'cover_photo' => 'image'
+        ]);
+        try {
+            $this->updateFile('cover_photo', 'company');
+        }catch (\Throwable $ex){
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+        return redirect()->back()->with('success', 'Update logo company successfully');
     }
 
     /**

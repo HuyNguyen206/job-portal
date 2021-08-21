@@ -26,8 +26,17 @@ Route::patch('profile/resume', [UserProfileController::class, 'updateResume'])->
 Route::patch('profile/avatar', [UserProfileController::class, 'updateAvatar'])->name('profile.avatar');
 Route::view('employer/register', 'auth.employer-register')->name('employer.show-register');
 Route::post('employer/register', [EmployerController::class, 'register'])->name('employer.register');
+Route::get('jobs/my-job', [JobController::class, 'getMyJob'])->name('jobs.my-job');
 Route::resource('jobs', JobController::class)->except('index');
+
+
 Route::resource('companies', CompanyController::class);
+
+Route::get('companies/{company}/profile',[CompanyController::class, 'showDetail'])->name('companies.profile');
+//Route::put('companies/update', [UserProfileController::class, 'update'])->name('companies.update');
+Route::patch('companies/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo');
+Route::patch('companies/{company}/cover-photo', [CompanyController::class, 'updateCoverPhoto'])->name('companies.cover-photo');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

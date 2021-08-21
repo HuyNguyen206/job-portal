@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'nguyenlehuyuit@gmail.com',
             'name' => 'huy'
         ]);
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(9)->create();
+        \App\Models\User::factory(10)->create([
+            'user_type' => 'employer'
+        ]);
 //            Category::factory(25)->create();
 
         DB::table('categories')->insert([
@@ -43,7 +46,7 @@ class DatabaseSeeder extends Seeder
             ],
 
         ]);
-        Company::factory(20)->create();
+//        Company::factory(20)->create();
         Job::factory(50)->create();
     }
 }

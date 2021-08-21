@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -50,7 +51,11 @@ class UserFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function($user){
-            Profile::factory()->create(['user_id' => $user]);
+            if($user->id <= 10){
+                Profile::factory()->create(['user_id' => $user]);
+            }else{
+                Company::factory()->create(['user_id' => $user]);
+            }
         });
     }
 }

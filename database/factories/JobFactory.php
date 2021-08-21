@@ -27,8 +27,8 @@ class JobFactory extends Factory
     {
         return [
             //
-            'user_id' => User::all()->random(),
-            'company_id' => Company::all()->random(),
+            'user_id' => $user = User::where('user_type', 'employer')->get()->random(),
+            'company_id' => $user->company->id,
             'title' => $title = $this->faker->text(10),
             'slug' => Str::slug($title),
             'position' => $this->faker->jobTitle,

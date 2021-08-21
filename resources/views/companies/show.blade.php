@@ -3,9 +3,14 @@
 @section('content')
     <div class="col-md-12">
        <div class="company-profile">
-           <img src="" alt="Company Image" class="w-100">
-        <div class="company-desc">
-            <img src="" alt="Avatar" class="w-100">
+           @if ($company->cover_photo)
+               <img src="{{Storage::url($company->cover_photo)}}" class="w-100" alt="">
+           @endif
+
+        <div class="company-desc mt-2">
+            @if ($company->logo)
+                <img src="{{Storage::url($company->logo)}}" style="width: 100px" alt="">
+            @endif
             <p>{{$company->description}}</p>
              <h1>Name-{{$company->name}}</h1>
             <p>Slogan-{{$company->slogan}}-&nbsp;Address-{{$company->address}}-&nbsp; Phone-{{$company->phone}}-&nbsp; Website-{{$company->website}}</p>

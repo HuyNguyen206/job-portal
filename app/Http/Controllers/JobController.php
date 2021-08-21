@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateJobRequest;
+use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class JobController extends Controller
 {
@@ -26,6 +29,7 @@ class JobController extends Controller
     public function create()
     {
         //
+        return view('jobs.create')->withCategories(Category::all());
     }
 
     /**
@@ -34,9 +38,18 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateJobRequest $request)
     {
         //
+        try {
+            $data = $request->validationData();
+            $data['slug'] = Str::slug($data['title']);
+            $user =  auth()->user();
+            $user->jobs()->create(array_merge($data, ['company_id' => $user->company->id]));
+        }catch (\Throwable $ex){
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+        return redirect()->back()->with('success', 'Create job successfully');
     }
 
     /**
@@ -83,5 +96,9 @@ class JobController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getMyJob(){
+        return view('jobs.my-job')->with('jobs', auth()->user()->jobs);
     }
 }

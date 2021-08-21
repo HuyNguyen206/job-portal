@@ -17,4 +17,5 @@ class Company extends Model
     {
      return 'slug';
     }
+
 }
