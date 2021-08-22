@@ -25,6 +25,7 @@ Route::put('profile/update', [UserProfileController::class, 'update'])->name('pr
 Route::patch('profile/cover-letter', [UserProfileController::class, 'updateCoverLetter'])->name('profile.cover-letter');
 Route::patch('profile/resume', [UserProfileController::class, 'updateResume'])->name('profile.resume');
 Route::patch('profile/avatar', [UserProfileController::class, 'updateAvatar'])->name('profile.avatar');
+Route::post('apply-job/{job}', [UserProfileController::class, 'applyJob'])->name('seeker.apply-job');
 Route::view('employer/register', 'auth.employer-register')->name('employer.show-register');
 Route::post('employer/register', [EmployerController::class, 'register'])->name('employer.register');
 Route::get('jobs/my-job', [JobController::class, 'getMyJob'])->name('jobs.my-job');
@@ -33,10 +34,11 @@ Route::resource('jobs', JobController::class)->except('index');
 
 Route::resource('companies', CompanyController::class);
 
-Route::get('companies/{company}/profile',[CompanyController::class, 'showDetail'])->name('companies.profile');
+Route::get('companies/profile/{company}',[CompanyController::class, 'showDetail'])->name('companies.profile');
 //Route::put('companies/update', [UserProfileController::class, 'update'])->name('companies.update');
 Route::patch('companies/{company}/logo', [CompanyController::class, 'updateLogo'])->name('companies.logo');
 Route::patch('companies/{company}/cover-photo', [CompanyController::class, 'updateCoverPhoto'])->name('companies.cover-photo');
+Route::get('companies/jobs/{job}', [CompanyController::class, 'getApplicant'])->name('companies.applicant');
 
 Auth::routes();
 

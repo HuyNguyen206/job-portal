@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\UploadFileTrait;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -141,5 +142,10 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getApplicant(Job $job)
+    {
+        return view('companies.applicant', compact('job'));
     }
 }

@@ -26,12 +26,20 @@
                 <td><i class="icon fas fa-2x fa-map-marker-alt"></i>&nbsp;Address: {{$job->address}}</td>
                 <td><i class="icon fas fa-2x fa-globe-asia"></i>&nbsp;Date: {{$job->created_at->diffForHumans()}}</td>
                 <td>
+                    @php
+                    $user = auth()->user();
+                    @endphp
                     <div class="btn-group">
-                        <a href="{{route('jobs.show', $job->slug)}}" class="btn btn-sm btn-success">Apply</a>
                         @auth
-                        @if (auth()->user()->user_type === 'employer')
+                            @if ($user->isSeeker() && !$job->isApplied())
+                                <a href="{{route('jobs.show', $job->slug)}}" class="btn btn-sm btn-success">Apply</a>
+                            @endif
+                        @if ($user->isEmployer())
                             <a href="{{route('jobs.edit', $job->slug)}}" class="btn btn-sm btn-primary">Edit</a>
                         @endif
+                            @if($user->isEmployer() && $job->user_id == $user->id)
+                                    <a href="{{route('companies.applicant', $job->slug)}}" class="btn btn-sm btn-dark">Applicants</a>
+                                @endif
                         @endauth
                     </div>
 
@@ -40,6 +48,35 @@
         @endforeach
         </tbody>
     </table>
+
+@if(isset($companies))
+<button class="btn btn-success w-100 d-block">Browse all jobs</button>
+<div class="mt-4">
+    <h2>
+        Featured company
+    </h2>
+    <div class="companies">
+        <div class="row">
+            @forelse($companies as $company)
+                <div class="card col-md-3 col-12" style="width: 18rem;">
+                    @if (Storage::exists($company->logo))
+                        <img src="{{Storage::url($company->logo)}}" class="card-img-top" alt="{{$company->name}}">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{$company->name}}</h5>
+                        <p class="card-text">
+                            {{$company->description}}
+                        </p>
+                        <a href="{{route('companies.show', $company->slug)}}" class="btn btn-primary">Visit company</a>
+                    </div>
+                </div>
+            @empty
+            @endforelse
+        </div>
+
+    </div>
+</div>
+@endif
 
 @section('style')
     <style>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome')->withJobs(Job::with('company')->get());
+        $jobs = Job::with('company')->whereStatus(1)->latest()->limit(10)->get();
+        $companies = Company::query()->latest()->limit(10)->get();
+        return view('welcome', compact('jobs', 'companies'));
     }
 }

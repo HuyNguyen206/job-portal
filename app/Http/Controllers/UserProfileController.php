@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\UploadFileTrait;
+use App\Models\Job;
 
 class UserProfileController extends Controller
 {
@@ -71,6 +72,15 @@ class UserProfileController extends Controller
             return redirect()->back()->with('error', $ex->getMessage());
         }
         return redirect()->back()->with('success', 'Update avatar successfully');
+    }
+
+    public function applyJob(Job $job){
+        try {
+            auth()->user()->jobsApplied()->attach($job);
+        }catch (\Throwable $ex){
+            return redirect()->back()->with('error', $ex->getMessage());
+        }
+        return redirect()->back()->with('success', 'Apply successfully');
     }
 
 

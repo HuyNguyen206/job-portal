@@ -31,8 +31,11 @@
                     </div>
                 </div>
 
-                @if($user = auth()->user() && $user->type == 'seeker')
-                <button class="btn btn-success mt-2 w-100">Apply</button>
+                @if(auth()->check() && auth()->user()->isSeeker() && !$job->isApplied())
+                    <form action="{{route('seeker.apply-job', $job->slug)}}" method="post">
+                        @csrf
+                        <button type="submit"  class="btn btn-success mt-2 w-100">Apply</button>
+                    </form>
                 @endif
 
             </div>
