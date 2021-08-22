@@ -43,7 +43,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
+                                <input id="date_picker" type="text" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required autocomplete="dob">
 
                                 @error('dob')
                                 <span class="invalid-feedback" role="alert">
@@ -102,4 +102,11 @@
         </div>
     </div>
 </div>
+@endsection
+@section('css')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@endsection
+
+@section('js')
+    @include('jobs.component.date-picker')
 @endsection

@@ -29,7 +29,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Update your profile
+                    Update company profile
                 </div>
                 <div class="card-body">
                     <form action="{{route('companies.update', $company->slug)}}" method="post">

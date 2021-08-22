@@ -9,8 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,7 +18,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    @yield('style')
+    @yield('css')
 </head>
 <body>
 <div id="app">
@@ -66,9 +64,11 @@
                         @php
                         $user = Auth::user()
                         @endphp
+                        @if ($user->isEmployer())
                     <li class="nav-item">
                         <a href="{{route('jobs.create')}}" class="btn btn-dark">Post a job</a>
                     </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false" v-pre>
@@ -79,6 +79,12 @@
                                 <a class="dropdown-item" href="{{auth()->user()->user_type === 'seeker' ? route('profile') : route('companies.profile', $user->company->slug)}}">
                                     {{ __('Profile') }}
                                 </a>
+                                @if ($user->isEmployer())
+                                    <a class="dropdown-item" href="{{route('jobs.my-job')}}">
+                                        {{ __('My job') }}
+                                    </a>
+                                @endif
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -103,5 +109,7 @@
         </div>
     </main>
 </div>
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('js')
 </body>
 </html>

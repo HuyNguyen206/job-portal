@@ -7,6 +7,11 @@ use App\Http\Traits\UploadFileTrait;
 class UserProfileController extends Controller
 {
     use UploadFileTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'check-permission:seeker']);
+    }
     //
     public function show(){
         $profile = auth()->user()->profile;

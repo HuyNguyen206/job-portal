@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ use Illuminate\View\View;
 |
 */
 
-Route::get('/', [JobController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('profile', [UserProfileController::class, 'show'])->name('profile');
 Route::put('profile/update', [UserProfileController::class, 'update'])->name('profile.update');
 Route::patch('profile/cover-letter', [UserProfileController::class, 'updateCoverLetter'])->name('profile.cover-letter');

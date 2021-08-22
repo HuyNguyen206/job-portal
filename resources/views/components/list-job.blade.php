@@ -25,7 +25,17 @@
                 </td>
                 <td><i class="icon fas fa-2x fa-map-marker-alt"></i>&nbsp;Address: {{$job->address}}</td>
                 <td><i class="icon fas fa-2x fa-globe-asia"></i>&nbsp;Date: {{$job->created_at->diffForHumans()}}</td>
-                <td><a href="{{route('jobs.show', $job->slug)}}" class="btn btn-sm btn-success">Apply</a></td>
+                <td>
+                    <div class="btn-group">
+                        <a href="{{route('jobs.show', $job->slug)}}" class="btn btn-sm btn-success">Apply</a>
+                        @auth
+                        @if (auth()->user()->user_type === 'employer')
+                            <a href="{{route('jobs.edit', $job->slug)}}" class="btn btn-sm btn-primary">Edit</a>
+                        @endif
+                        @endauth
+                    </div>
+
+                </td>
             </tr>
         @endforeach
         </tbody>

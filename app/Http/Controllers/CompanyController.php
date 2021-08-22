@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 class CompanyController extends Controller
 {
     use UploadFileTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'check-permission:employer'])->except('show');
+    }
     /**
      * Display a listing of the resource.
      *
