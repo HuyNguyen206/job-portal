@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\UploadFileTrait;
 use App\Models\Job;
+use Carbon\Carbon;
 
 class UserProfileController extends Controller
 {
@@ -11,7 +12,7 @@ class UserProfileController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'check-permission:seeker']);
+        $this->middleware(['auth', 'verified', 'check-permission:seeker']);
     }
     //
     public function show(){
@@ -78,11 +79,26 @@ class UserProfileController extends Controller
         try {
             auth()->user()->jobsApplied()->attach($job);
         }catch (\Throwable $ex){
-            return redirect()->back()->with('error', $ex->getMessage());
+            return response()->json(['success' => false, 'message' => $ex->getMessage()], 500);
         }
-        return redirect()->back()->with('success', 'Apply successfully');
+        return response()->json(['success' => true, 'message' => 'Apply successfully']);
     }
 
+    public function toogleFavotiteJob(Job $job){
+        try {
+            $currentUser = auth()->user();
+            $isSave = $job->isSaveByUserAlready($currentUser);
+            $job->usersFavorite()->toggle($currentUser);
+            $message = $isSave ? 'UnSave' : 'Save';
+        }catch (\Throwable $ex) {
+            return response()->json(['success' => false, 'message' => $ex->getMessage()], 500);
+        }
+        return response()->json(['success' => true, 'message' => "$message successfully"]);
+    }
 
+    public function getSavedJobs()
+    {
+        return view('jobs.favorite-job')->withJobs(auth()->user()->jobsFavorite);
+    }
 
 }

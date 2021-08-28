@@ -8,13 +8,14 @@ use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\isInstanceOf;
 
 class JobController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware(['auth', 'check-permission:employer'])->except('show');
+        $this->middleware([ 'auth', 'verified', 'check-permission:employer'])->except('show', 'getAllJob');
     }
 
     /**
@@ -25,6 +26,35 @@ class JobController extends Controller
     public function index()
     {
         //
+    }
+
+    public function getAllJob()
+    {
+        $jobQuery = Job::query();
+        if ($keyword = \request()->keyword) {
+            $jobQuery->where('title', 'like', "%$keyword%")
+                    ->orWhere('description', 'like', "%$keyword%")
+                    ->orWhere('position', 'like', "%$keyword%");
+        }
+
+        if ($address = \request()->address) {
+            $jobQuery->where('address','like', "%$address%");
+        }
+
+        if ($type = \request()->type) {
+            if ($type !== 'all') {
+                $jobQuery->where('type', $type);
+            }
+        }
+
+        if ($categoryId = \request()->category_id) {
+            if ($type !== 'all') {
+                $jobQuery->where('category_id', $categoryId);
+            }
+        }
+        $jobs = $jobQuery->latest()->paginate(10);
+        $categories = Category::all();
+        return view('jobs.all-job', compact('jobs', 'categories'));
     }
 
     /**
@@ -67,7 +97,8 @@ class JobController extends Controller
     public function show(Job $job)
     {
         //
-        return view('jobs.show', compact('job'));
+        $isSave = $job->isSaveByUserAlready();
+        return view('jobs.show', compact('job', 'isSave'));
     }
 
     /**
@@ -119,4 +150,6 @@ class JobController extends Controller
     public function getMyJob(){
         return view('jobs.my-job')->with('jobs', auth()->user()->jobs);
     }
+
+
 }

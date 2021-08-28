@@ -83,6 +83,11 @@
                                     <a class="dropdown-item" href="{{route('jobs.my-job')}}">
                                         {{ __('My job') }}
                                     </a>
+                                @else
+                                    <a class="dropdown-item" href="{{route('jobs.saved-job')}}">
+                                        {{ __('My save job') }}
+                                    </a>
+
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"

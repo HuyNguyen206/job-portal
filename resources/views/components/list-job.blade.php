@@ -50,7 +50,7 @@
     </table>
 
 @if(isset($companies))
-<button class="btn btn-success w-100 d-block">Browse all jobs</button>
+<a href="{{route('jobs.get-all-job')}}" class="btn btn-success w-100 d-block">Browse all jobs</a>
 <div class="mt-4">
     <h2>
         Featured company

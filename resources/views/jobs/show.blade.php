@@ -27,16 +27,16 @@
                         <p>Address:{{$job->address}}</p>
                         <p>Employment Type: {{$job->type}}</p>
                         <p>Position: {{$job->position}}</p>
-                        <p>Date: {{$job->created_at->diffForHumans()}}</p>
+                        <p>Post: {{$job->created_at->diffForHumans()}}</p>
+                        <p>Last date: {{$job->last_date->toFormattedDateString()}}</p>
                     </div>
                 </div>
-
-                @if(auth()->check() && auth()->user()->isSeeker() && !$job->isApplied())
-                    <form action="{{route('seeker.apply-job', $job->slug)}}" method="post">
-                        @csrf
-                        <button type="submit"  class="btn btn-success mt-2 w-100">Apply</button>
-                    </form>
-                @endif
+                @auth
+                    @if (auth()->user()->isSeeker() && !$job->isApplied())
+                        <apply-job job-slug="{{$job->slug}}"></apply-job>
+                    @endif
+                        <save-job job-slug="{{$job->slug}}" is-save="{{$isSave}}"></save-job>
+                @endauth
 
             </div>
         </div>
