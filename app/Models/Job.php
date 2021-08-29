@@ -48,7 +48,10 @@ class Job extends Model
     public function isSaveByUserAlready(User $user = null)
     {
         $user = $user ?? auth()->user();
-        return $this->usersFavorite->contains('id', $user->id);
+        if($user) {
+            return $this->usersFavorite->contains('id', $user->id);
+        }
+        return false;
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Http\Resources\JobSearchResource;
 use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class JobController extends Controller
 
     public function __construct()
     {
-        $this->middleware([ 'auth', 'verified', 'check-permission:employer'])->except('show', 'getAllJob');
+        $this->middleware([ 'auth', 'verified', 'check-permission:employer'])->except('show', 'getAllJob', 'searchJob');
     }
 
     /**
@@ -26,6 +27,20 @@ class JobController extends Controller
     public function index()
     {
         //
+    }
+
+    public function searchJob()
+    {
+        try {
+            $keyword = \request()->keyword;
+            $jobs = collect([]);
+            if ($keyword) {
+                $jobs = Job::query()->where('title', 'like',  "%$keyword%")->get();
+            }
+        }catch (\Throwable $ex) {
+         return  response()->error($ex->getMessage());
+        }
+        return response()->success(['jobs' => JobSearchResource::collection($jobs)]);
     }
 
     public function getAllJob()

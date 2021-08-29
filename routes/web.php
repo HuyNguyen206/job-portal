@@ -33,8 +33,8 @@ Route::post('jobs/favorite/{job}', [UserProfileController::class, 'toogleFavotit
 Route::get('jobs/my-job', [JobController::class, 'getMyJob'])->name('jobs.my-job');
 Route::get('jobs/get-all-job', [JobController::class, 'getAllJob'])->name('jobs.get-all-job');
 Route::resource('jobs', JobController::class)->except('index', 'show');
-Route::get('jobs/{job}/detail', [JobController::class, 'show'])->name('jobs.show');
-
+Route::get('jobs//detail/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::post('jobs/search-job', [JobController::class, 'searchJob']);
 Route::resource('companies', CompanyController::class);
 
 Route::get('companies/profile/{company}',[CompanyController::class, 'showDetail'])->name('companies.profile');
