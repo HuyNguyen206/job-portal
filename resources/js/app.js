@@ -36,6 +36,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('apply-job', require('./components/ApplyJob').default)
 Vue.component('save-job', require('./components/SaveJob').default)
 Vue.component('search-job', require('./components/SearchJob').default)
+Vue.component('login-form', require('./components/LoginForm').default)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
