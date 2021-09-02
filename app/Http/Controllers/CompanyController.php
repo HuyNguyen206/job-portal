@@ -14,7 +14,7 @@ class CompanyController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified', 'check-permission:employer'])->except('show');
+        $this->middleware(['auth', 'verified', 'check-permission:employer'])->except(['show', 'index']);
     }
     /**
      * Display a listing of the resource.
@@ -24,6 +24,8 @@ class CompanyController extends Controller
     public function index()
     {
         //
+        $companies = Company::query()->paginate(10);
+        return view('companies.index', compact('companies'));
     }
 
     /**

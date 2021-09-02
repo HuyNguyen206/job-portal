@@ -14,12 +14,23 @@
         </div>
         <div class="row mt-4">
             <div class="col-md-8 ">
-                <div class="mb-5">
-                    <h5>Description</h5>
-                    <p>
-                        {{$job->position}}
-                    </p>
+                <div class="row">
+                    <div class="col-10">
+                        <div class="mb-5">
+                            <h5>Description</h5>
+                            <p>
+                                {{$job->position}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn bg-primary text-white rounded"
+                                data-toggle="modal" data-target="#job-email">
+                            <i class="fas fa-2x fa-envelope"></i>
+                        </button>
+                    </div>
                 </div>
+
                 <div class="mb-5">
                     <h5>Description</h5>
                     <p>
@@ -81,4 +92,6 @@
         </div>
     </div>
 
+{{--    @include('partials.mail-modal')--}}
+        <mail-form job-id="{{$job->id}}" is-login="{{auth()->check()}}"></mail-form>
 @endsection

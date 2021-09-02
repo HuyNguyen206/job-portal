@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateJobRequest;
+use App\Http\Requests\SendJobToFriendRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\JobSearchResource;
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\User;
+use App\Notifications\SendJobToFriendNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use function PHPUnit\Framework\isInstanceOf;
 
@@ -16,7 +20,7 @@ class JobController extends Controller
 
     public function __construct()
     {
-        $this->middleware([ 'auth', 'verified', 'check-permission:employer'])->except('show', 'getAllJob', 'searchJob');
+        $this->middleware([ 'auth', 'verified', 'check-permission:employer'])->except('show', 'getAllJob', 'searchJob', 'sendToFriend');
     }
 
     /**
@@ -164,6 +168,20 @@ class JobController extends Controller
 
     public function getMyJob(){
         return view('jobs.my-job')->with('jobs', auth()->user()->jobs);
+    }
+
+    public function sendToFriend(SendJobToFriendRequest $request)
+    {
+        try {
+            $data = $request->validationData();
+            $sender = auth()->user() ?? (new User())->fill(['name' => $data['name'], 'email' => $data['email']]);
+            $job = Job::query()->findOrFail($request->jobId);
+            $jobUrl = route('jobs.show', $job->slug);
+            Notification::route('mail', $request->emailPerson)->notify(new SendJobToFriendNotification($sender, $jobUrl, $job->position));
+            return response()->success([], 'Sent job successfully');
+        }catch (\Throwable $ex) {
+            return response()->error($ex->getMessage());
+        }
     }
 
 

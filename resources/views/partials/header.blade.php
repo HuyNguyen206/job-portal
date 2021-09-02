@@ -62,6 +62,7 @@
                                         </li>
                                     @endguest
                                     <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="{{route('companies.index')}}">Companies</a></li>
                                     <li>
                                         @auth
                                             <a  href="{{ route('logout') }}"

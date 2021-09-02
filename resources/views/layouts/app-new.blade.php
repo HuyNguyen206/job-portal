@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{asset('jobfinder/css/aos.css')}}">
 
     <link rel="stylesheet" href="{{asset('jobfinder/css/style.css')}}">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     @yield('css')
 </head>
 <body>
@@ -144,9 +145,14 @@
     }
 </script>
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&libraries=places&callback=initAutocomplete"
-    async defer></script>
+{{--<script--}}
+{{--    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&libraries=places&callback=initAutocomplete"--}}
+{{--    async defer></script>--}}
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1-8dKOXbekVnsiPHzpMvCHVUqwiHNpkI&libraries=places&callback=initAutocomplete">
+</script>
+</html>
+
 @yield('js')
 
 </body>

@@ -36,6 +36,7 @@ Route::get('jobs/get-all-job', [JobController::class, 'getAllJob'])->name('jobs.
 Route::resource('jobs', JobController::class)->except('index', 'show');
 Route::get('jobs/detail/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::post('jobs/search-job', [JobController::class, 'searchJob']);
+Route::post('jobs/sent-to-friend', [JobController::class, 'sendToFriend'])->name('jobs.sent-to-friend');
 Route::resource('companies', CompanyController::class);
 
 Route::get('categories/index/{category}', [CategoryController::class, 'index'])->name('categories.index');

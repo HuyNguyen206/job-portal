@@ -8,7 +8,7 @@
         <th>Action</th>
         </thead>
         <tbody>
-        @foreach ($jobs as $job)
+        @forelse ($jobs as $job)
             <tr>
                 <td>
                     @if ($logo = $job->company->logo)
@@ -46,7 +46,11 @@
 
                 </td>
             </tr>
-        @endforeach
+            @empty
+            <tr>
+                <td colspan="5">No job found</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 

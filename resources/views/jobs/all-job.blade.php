@@ -1,9 +1,9 @@
 @extends('layouts.app-new')
 
 @section('content')
-    <div class="container">
+    <div class="container my-3">
         <div class="row">
-            <form action="http://job-portal.com/jobs/get-all-job?new=123">
+            <form action="{{route('jobs.get-all-job')}}">
                 <div class="form-inline">
                     <div class="form-group mr-3">
                         <label for="" class="mr-1">Keyword</label>

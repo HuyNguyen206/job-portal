@@ -3,17 +3,17 @@
         <div class="row align-items-center">
             <div class="col-12" data-aos="fade">
                 <h1>Find Job</h1>
-                <form action="#">
+                <form action="{{route('jobs.get-all-job')}}">
                     <div class="row mb-3">
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-6 mb-3 mb-md-0">
-                                    <input type="text" class="mr-3 form-control border-0 px-4" placeholder="job title, keywords or company name ">
+                                    <input name="keyword" type="text" class="mr-3 form-control border-0 px-4" placeholder="job title, keywords or company name ">
                                 </div>
                                 <div class="col-md-6 mb-3 mb-md-0">
                                     <div class="input-wrap">
                                         <span class="icon icon-room"></span>
-                                        <input type="text" class="form-control form-control-block search-input  border-0 px-4" id="autocomplete" placeholder="city, province or region" onFocus="geolocate()">
+                                        <input type="text" name="address" class="form-control form-control-block search-input  border-0 px-4" id="autocomplete" placeholder="city, province or region" onFocus="geolocate()">
                                     </div>
                                 </div>
                             </div>
