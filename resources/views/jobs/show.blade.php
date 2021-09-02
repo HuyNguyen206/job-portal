@@ -3,74 +3,79 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <img src="{{asset('jobfinder/images/hero_1.jpg')}}" class="w-100" alt="">
+            <div class="col-12">
+                <h2>
+                    {{$job->title}}
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{asset('jobfinder/images/job-finder.jpg')}}" class="w-100" alt="">
         </div>
         <div class="row mt-4">
             <div class="col-md-8 ">
-                <div>
-                    <h5>More Info</h5>
+                <div class="mb-5">
+                    <h5>Description</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore dolorem, eligendi ipsa
-                        libero magnam maxime nemo nisi, numquam perferendis porro quaerat quas quidem quos reiciendis
-                        temporibus vitae. Adipisci architecto consectetur cupiditate deserunt dignissimos dolorem
-                        eligendi enim eum ipsum, minus nam odio placeat porro quasi quidem reiciendis repellat vel
-                        voluptatum.
+                        {{$job->position}}
                     </p>
                 </div>
-                <div>
-                    <h5>More Info</h5>
+                <div class="mb-5">
+                    <h5>Description</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore dolorem, eligendi ipsa
-                        libero magnam maxime nemo nisi, numquam perferendis porro quaerat quas quidem quos reiciendis
-                        temporibus vitae. Adipisci architecto consectetur cupiditate deserunt dignissimos dolorem
-                        eligendi enim eum ipsum, minus nam odio placeat porro quasi quidem reiciendis repellat vel
-                        voluptatum.
+                        {{$job->description}}
                     </p>
                 </div>
-                <div>
-                    <h5>More Info</h5>
+                <div class="mb-5">
+                    <h5>Role and responsibility</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore dolorem, eligendi ipsa
-                        libero magnam maxime nemo nisi, numquam perferendis porro quaerat quas quidem quos reiciendis
-                        temporibus vitae. Adipisci architecto consectetur cupiditate deserunt dignissimos dolorem
-                        eligendi enim eum ipsum, minus nam odio placeat porro quasi quidem reiciendis repellat vel
-                        voluptatum.
+                    {{$job->roles}}
+                </div>
+                <div class="mb-5">
+                    <h5>Number of vacancy</h5>
+                    <p>
+                        {{$job->number_of_vacancy ?? 0}}
                     </p>
                 </div>
-                <div>
-                    <h5>More Info</h5>
+                <div class="mb-5">
+                    <h5>Year of experience</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore dolorem, eligendi ipsa
-                        libero magnam maxime nemo nisi, numquam perferendis porro quaerat quas quidem quos reiciendis
-                        temporibus vitae. Adipisci architecto consectetur cupiditate deserunt dignissimos dolorem
-                        eligendi enim eum ipsum, minus nam odio placeat porro quasi quidem reiciendis repellat vel
-                        voluptatum.
+                        {{$job->year_of_experience ?? 0}}
                     </p>
                 </div>
-                <div>
-                    <h5>More Info</h5>
+                <div class="mb-5">
+                    <h5>Gender</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore dolorem, eligendi ipsa
-                        libero magnam maxime nemo nisi, numquam perferendis porro quaerat quas quidem quos reiciendis
-                        temporibus vitae. Adipisci architecto consectetur cupiditate deserunt dignissimos dolorem
-                        eligendi enim eum ipsum, minus nam odio placeat porro quasi quidem reiciendis repellat vel
-                        voluptatum.
+                        {{$job->gender}}
+                    </p>
+                </div>
+                <div class="mb-5">
+                    <h5>Salary</h5>
+                    <p>
+                        {{$job->salary}}
                     </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div>
                     <h5>Short info</h5>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-                    <p>Company name</p>
-
+                    <p>Company: <a href="{{route('companies.show', $job->company->slug)}}">{{$job->company->name}}</a></p>
+                    <p>Address:{{$job->address}}</p>
+                    <p>Employment Type: {{$job->type}}</p>
+                    <p>Position: {{$job->position}}</p>
+                    <p>Post: {{$job->created_at->diffForHumans()}}</p>
+                    <p>Last date: {{$job->last_date->toFormattedDateString()}}</p>
+                            <p>
+                                <a href="{{route('companies.show', $job->company->slug)}}" class="btn btn-warning text-white d-block">Visit company page</a>
+                            </p>
+                    @auth()
+                        @if (($isSeeker = auth()->user()->isSeeker()) && !$job->isApplied())
+                            <apply-job job-slug="{{$job->slug}}"></apply-job>
+                        @endif
+                        @if($isSeeker)
+                        <save-job job-slug="{{$job->slug}}" is-save="{{$isSave}}"></save-job>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>

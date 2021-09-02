@@ -2,10 +2,10 @@
 <table class="table">
         <thead>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Position</th>
+        <th>Address</th>
+        <th>Date post</th>
+        <th>Action</th>
         </thead>
         <tbody>
         @foreach ($jobs as $job)

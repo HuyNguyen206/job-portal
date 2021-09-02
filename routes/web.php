@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
@@ -36,6 +37,8 @@ Route::resource('jobs', JobController::class)->except('index', 'show');
 Route::get('jobs/detail/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::post('jobs/search-job', [JobController::class, 'searchJob']);
 Route::resource('companies', CompanyController::class);
+
+Route::get('categories/index/{category}', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::get('companies/profile/{company}',[CompanyController::class, 'showDetail'])->name('companies.profile');
 //Route::put('companies/update', [UserProfileController::class, 'update'])->name('companies.update');

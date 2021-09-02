@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -26,8 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $categories = Category::query()->withCount('jobs')->get();
         $jobs = Job::with('company')->whereStatus(1)->latest()->limit(10)->get();
         $companies = Company::query()->latest()->limit(10)->get();
-        return view('welcome', compact('jobs', 'companies'));
+        return view('welcome', compact('jobs', 'companies', 'categories'));
     }
 }

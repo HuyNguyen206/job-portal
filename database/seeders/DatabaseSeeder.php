@@ -31,18 +31,23 @@ class DatabaseSeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'name' => 'Technology',
+                'slug' => 'technology'
             ],
             [
                 'name' => 'Engineering',
+                'slug' => 'engineering'
             ],
             [
                 'name' => 'Government',
+                'slug' => 'government'
             ],
             [
                 'name' => 'Medical',
+                'slug' => 'medical'
             ],
             [
-                'name' => 'Software'
+                'name' => 'Software',
+                 'slug' => 'software'
             ],
 
         ]);

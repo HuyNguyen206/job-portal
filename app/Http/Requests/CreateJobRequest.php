@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateJobRequest extends FormRequest
@@ -32,7 +33,11 @@ class CreateJobRequest extends FormRequest
             'roles' => 'required',
             'type' => 'required',
             'status' => 'required',
-            'last_date' => 'required'
+            'last_date' => 'required',
+            'gender' => 'required',
+            'year_of_experience' => 'required',
+            'salary' => 'required',
+            'number_of_vacancy' => 'required'
         ];
     }
 }

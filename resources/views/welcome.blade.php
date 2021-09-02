@@ -12,124 +12,37 @@
                 <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
                     <h2 class="mb-5 h3">Recent Jobs</h2>
                     <div class="rounded border jobs-wrap">
-
-                        <a href="job-single.html"
-                           class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
-                            <div class="company-logo blank-logo text-center text-md-left pl-3">
-                                <img src="{{asset('jobfinder/images/company_logo_blank.png')}}" alt="Image"
-                                     class="img-fluid mx-auto">
-                            </div>
-                            <div class="job-details h-100">
-                                <div class="p-3 align-self-center">
-                                    <h3>Restaurant Crew</h3>
-                                    <div class="d-block d-lg-flex">
-                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span> Resto Bar</div>
-                                        <div class="mr-3"><span class="icon-room mr-1"></span> Florida</div>
-                                        <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
+                        @foreach ($jobs as $job)
+                            <a href="{{route('jobs.show', $job->slug)}}"
+                               class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
+                                <div class="company-logo blank-logo text-center text-md-left pl-3">
+                                    <img src="{{Storage::url($job->company->logo)}}" alt="Image"
+                                         class="img-fluid mx-auto" style="width: 100%">
+                                </div>
+                                <div class="job-details h-100">
+                                    <div class="p-3 align-self-center">
+                                        <h3>{{$job->position}}</h3>
+                                        <div class="d-block d-lg-flex">
+                                            <div class="mr-3"><span class="icon-suitcase mr-1"></span> {{Str::limit($job->company->name, 15)}}</div>
+                                            <div class="mr-3"><span class="icon-room mr-1"></span> {{Str::limit($job->address, 20)}}</div>
+{{--                                            <div class="mr-3"><span class="icon-calendar-times-o mr-1"></span> {{$job->last_date->toFormattedDateString()}}</div>--}}
+                                            @if ($salary = $job->salary)
+                                                <div><span class="icon-money mr-1"></span>&nbsp;$&nbsp;{{$salary}}</div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="job-category align-self-center">
-                                <div class="p-3">
-                                    <span class="text-info p-2 rounded border border-info">Full Time</span>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="job-single.html" class="job-item d-block d-md-flex align-items-center freelance">
-                            <div class="company-logo blank-logo text-center text-md-left pl-3">
-                                <img src="{{asset('jobfinder/images/logo_1.png')}}" alt="Image"
-                                     class="img-fluid mx-auto">
-                            </div>
-                            <div class="job-details h-100">
-                                <div class="p-3 align-self-center">
-                                    <h3>JavaScript Fullstack Developer</h3>
-                                    <div class="d-block d-lg-flex">
-                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span> Cooper</div>
-                                        <div class="mr-3"><span class="icon-room mr-1"></span> Anywhere</div>
-                                        <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
+                                <div class="job-category align-self-center">
+                                    <div class="p-3">
+                                        <span class="p-2 rounded border @if ($job->type === 'fulltime')text-info border-info @else text-warning border-warning @endif">{{$job->type}}</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="job-category align-self-center">
-                                <div class="p-3">
-                                    <span class="text-warning p-2 rounded border border-warning">Freelance</span>
-                                </div>
-                            </div>
-                        </a>
-
-
-                        <a href="job-single.html" class="job-item d-block d-md-flex align-items-center freelance">
-                            <div class="company-logo blank-logo text-center text-md-left pl-3">
-                                <img src="{{asset('jobfinder/images/logo_1.png')}}" alt="Image"
-                                     class="img-fluid mx-auto">
-                            </div>
-                            <div class="job-details h-100">
-                                <div class="p-3 align-self-center">
-                                    <h3>ReactJS Fullstack Developer</h3>
-                                    <div class="d-block d-lg-flex">
-                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span> Cooper</div>
-                                        <div class="mr-3"><span class="icon-room mr-1"></span> Anywhere</div>
-                                        <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-category align-self-center">
-                                <div class="p-3">
-                                    <span class="text-warning p-2 rounded border border-warning">Freelance</span>
-                                </div>
-                            </div>
-                        </a>
-
-
-                        <a href="job-single.html" class="job-item d-block d-md-flex align-items-center fulltime">
-                            <div class="company-logo blank-logo text-center text-md-left pl-3">
-                                <img src="{{asset('jobfinder/images/company_logo_blank.png')}}" alt="Image"
-                                     class="img-fluid mx-auto">
-                            </div>
-                            <div class="job-details h-100">
-                                <div class="p-3 align-self-center">
-                                    <h3>Assistant Brooker, Real Estate</h3>
-                                    <div class="d-block d-lg-flex">
-                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span> RealState</div>
-                                        <div class="mr-3"><span class="icon-room mr-1"></span> New York</div>
-                                        <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-category align-self-center">
-                                <div class="p-3">
-                                    <span class="text-info p-2 rounded border border-info">Full Time</span>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="job-single.html" class="job-item d-block d-md-flex align-items-center partime">
-                            <div class="company-logo blank-logo text-center text-md-left pl-3">
-                                <img src="{{asset('jobfinder/images/logo_2.png')}}" alt="Image"
-                                     class="img-fluid mx-auto">
-                            </div>
-                            <div class="job-details h-100">
-                                <div class="p-3 align-self-center">
-                                    <h3>Telecommunication Manager</h3>
-                                    <div class="d-block d-lg-flex">
-                                        <div class="mr-3"><span class="icon-suitcase mr-1"></span> Think</div>
-                                        <div class="mr-3"><span class="icon-room mr-1"></span> London</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-category align-self-center">
-                                <div class="p-3">
-                                    <span class="text-danger p-2 rounded border border-danger">Par Time</span>
-                                </div>
-                            </div>
-                        </a>
-
-
+                            </a>
+                        @endforeach
                     </div>
 
                     <div class="col-md-12 text-center mt-5">
-                        <a href="#" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span>
+                        <a href="{{route('jobs.get-all-job')}}" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span>
                             Show More Jobs</a>
                     </div>
                 </div>
@@ -215,7 +128,8 @@
                     <p class="h3 text-white mb-5">Is Waiting For You</p>
                     <p>
                         <a href="{{route('register')}}" class="btn btn-outline-success py-3 px-4">Job seeker</a>
-                        <a href="{{route('employer.show-register')}}" class="btn btn-outline-warning py-3 px-4">Employer</a>
+                        <a href="{{route('employer.show-register')}}"
+                           class="btn btn-outline-warning py-3 px-4">Employer</a>
                     </p>
 
                 </div>

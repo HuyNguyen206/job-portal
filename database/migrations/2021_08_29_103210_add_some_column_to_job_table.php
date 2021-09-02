@@ -16,9 +16,9 @@ class AddSomeColumnToJobTable extends Migration
         Schema::table('jobs', function (Blueprint $table) {
             //
             $table->integer('number_of_vacancy')->nullable();
-            $table->tinyInteger('experience')->nullable();
+            $table->tinyInteger('year_of_experience')->nullable();
             $table->string('gender')->nullable();
-            $table->decimal('salary')->nullable();
+            $table->string('salary')->nullable();
         });
     }
 

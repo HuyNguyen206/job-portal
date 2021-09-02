@@ -1,15 +1,15 @@
-@extends('layouts.app-new')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="row">
             <form action="http://job-portal.com/jobs/get-all-job?new=123">
                 <div class="form-inline">
-                    <div class="form-group mr-3">
+                    <div class="form-group mr-2">
                         <label for="" class="mr-1">Keyword</label>
-                        <input type="text" name="keyword" class="form-control p-0" value="{{request()->keyword ?? null}}">
+                        <input type="text" name="keyword" class="form-control" value="{{request()->keyword ?? null}}">
                     </div>
-                    <div class="form-group mr-3">
+                    <div class="form-group mr-2">
                         <label class="mr-1" for="">Category</label>
                         <select  id="" name="category_id" class="form-control">
                             <option value="0" disabled>--Select Category--</option>
@@ -19,11 +19,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mr-3">
+                    <div class="form-group mr-2">
                         <label class="mr-1" for="">Address</label>
                         <input type="text" name="address" class="form-control" value="{{request()->address ?? null}}">
                     </div>
-                    <div class="form-group mr-3">
+                    <div class="form-group mr-2">
                         <label class="mr-1" for="">Type</label>
                         <select class="form-control" name="type">
                             <option disabled>--Select type--</option>
@@ -33,7 +33,7 @@
                             <option {{request()->type === "casual" ? "selected" : ''}} value="casual">Casual</option>
                         </select>
                     </div>
-                    <button class="btn btn-success mt-2 mx-auto" type="submit">Search</button>
+                    <button class="btn btn-success" type="submit">Search</button>
                 </div>
             </form>
 
@@ -51,9 +51,6 @@
     <style>
         .pagination{
         justify-content: center;
-        }
-        .form-control {
-            height: 40px;
         }
     </style>
 
