@@ -2382,7 +2382,10 @@ Vue.component('mail-form', __webpack_require__(/*! ./components/MailForm */ "./r
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  mounted: function mounted() {
+    console.log('Hello');
+  }
 });
 
 /***/ }),

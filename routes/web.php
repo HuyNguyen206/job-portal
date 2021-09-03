@@ -52,3 +52,9 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
+Route::get('dashboard/posts/create', [DashBoardController::class, 'create'])->name('dashboard.create');
+Route::post('dashboard/posts', [DashBoardController::class, 'store'])->name('dashboard.store');
+
+Route::delete('dashboard/posts/{post}', [DashBoardController::class, 'delete'])->name('dashboard.delete');
+Route::get('dashboard/posts/{post}', [DashBoardController::class, 'edit'])->name('dashboard.edit');
+Route::put('dashboard/posts/{post}', [DashBoardController::class, 'update'])->name('dashboard.update');

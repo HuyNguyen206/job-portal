@@ -73,4 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->roles->contains('name', 'admin');
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

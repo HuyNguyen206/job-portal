@@ -46,4 +46,7 @@ Vue.component('mail-form', require('./components/MailForm').default)
 
 const app = new Vue({
     el: '#app',
+    mounted() {
+        console.log('Hello')
+    }
 });
