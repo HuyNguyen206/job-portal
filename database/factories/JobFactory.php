@@ -38,7 +38,7 @@ class JobFactory extends Factory
             'roles' => $this->faker->text(10),
             'status' => rand(0, 1),
             'description' => $this->faker->paragraph(3),
-            'last_date' => $this->faker->dateTime,
+            'last_date' => $this->faker->dateTimeBetween('-2 years', '2 years'),
             'number_of_vacancy' => rand(1, 5),
             'year_of_experience' => rand(1, 10),
             'gender' => $this->faker->randomElement(['male', 'female']),

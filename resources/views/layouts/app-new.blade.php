@@ -34,7 +34,8 @@
     @yield('content')
     @include('partials.footer')
     @guest
-       <login-form></login-form>
+        <login-form></login-form>
+
     @endguest
 </div>
 
@@ -143,6 +144,10 @@
             });
         }
     }
+
+    @if(session('isShowLoginForm'))
+    $('#login').modal('show')
+    @endif
 </script>
 
 {{--<script--}}

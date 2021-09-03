@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notification;
 class SendJobToFriendNotification extends Notification
 {
     use Queueable;
-    private $sender, $jobUrl, $jobPosition;
+    private $sender, $jobUrl, $jobPosition, $receiverName;
 
     /**
      * Create a new notification instance.
@@ -21,12 +21,13 @@ class SendJobToFriendNotification extends Notification
      * @param $jobUrl
      * @param $jobPosition
      */
-    public function __construct(User $sender, $jobUrl, $jobPosition)
+    public function __construct(User $sender, $jobUrl, $jobPosition, $receiverName)
     {
         //
         $this->sender = $sender;
         $this->jobUrl = $jobUrl;
         $this->jobPosition = $jobPosition;
+        $this->receiverName = $receiverName;
     }
 
     /**
@@ -50,6 +51,7 @@ class SendJobToFriendNotification extends Notification
     {
         return (new MailMessage)
                 ->subject('Job referal notification')
+                    ->greeting("hi $this->receiverName")
                     ->line("{$this->sender->name} has sent this job to you")
                     ->line("Job position: $this->jobPosition")
                     ->action('Go to this job', url($this->jobUrl))

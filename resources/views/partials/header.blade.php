@@ -65,14 +65,29 @@
                                         <li><a href="{{route('companies.index')}}">Companies</a></li>
                                     <li>
                                         @auth
+                                            @php
+                                                $user = auth()->user()
+                                            @endphp
+                                            @if($user->isAdmin())
+                                            <li>
+                                                <a href="{{route('dashboard')}}">Dashboard</a>
+                                            </li>
+                                            @endif
+                                        <li>
                                             <a  href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
+                                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                                 {{ __('Logout') }}
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
                                             </form>
+                                        </li>
+
+                                            <li>
+                                            <i class="fas fa-user"></i>
+                                            <span>{{auth()->user()->name}}</span>
+                                        </li>
                                         @else
                                             <button type="button" class="btn bg-primary text-white py-3 px-4 rounded"
                                                     data-toggle="modal" data-target="#login">

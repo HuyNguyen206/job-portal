@@ -1,7 +1,7 @@
 @extends('layouts.app-new')
 
 @section('content')
-    <div class="container">
+    <div class="container my-2">
         <div class="row">
             <div class="col-12">
                 <h2>
@@ -66,10 +66,13 @@
                         {{$job->salary}}
                     </p>
                 </div>
+                <div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div>
                     <h5>Short info</h5>
+                    <p>Category: {{$job->category->name}}</p>
                     <p>Company: <a href="{{route('companies.show', $job->company->slug)}}">{{$job->company->name}}</a></p>
                     <p>Address:{{$job->address}}</p>
                     <p>Employment Type: {{$job->type}}</p>
@@ -89,6 +92,24 @@
                     @endauth
                 </div>
             </div>
+        </div>
+        <div class="row">
+            @forelse($jobsRecommend as $job)
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <p class="badge-success badge">{{$job->type}}</p>
+                            <h5 class="card-title">{{$job->position}}</h5>
+                            <p class="card-text">
+                                {{Str::limit($job->description, 90)}}
+                            </p>
+                            <a href="{{route('jobs.show', $job->slug)}}" class="btn btn-sm btn-success">Apply</a>
+
+                        </div>
+                    </div>
+                </div>
+            @empty
+            @endforelse
         </div>
     </div>
 

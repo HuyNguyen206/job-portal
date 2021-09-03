@@ -63,4 +63,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Job::class, 'favorites')->withTimestamps();
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'user_role');
+    }
+
+    public function isAdmin()
+    {
+        return $this->roles->contains('name', 'admin');
+    }
+
 }

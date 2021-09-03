@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
@@ -50,3 +51,4 @@ Route::get('companies/jobs/{job}', [CompanyController::class, 'getApplicant'])->
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');

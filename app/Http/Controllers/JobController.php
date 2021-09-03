@@ -7,6 +7,7 @@ use App\Http\Requests\SendJobToFriendRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\JobSearchResource;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Job;
 use App\Models\User;
 use App\Notifications\SendJobToFriendNotification;
@@ -117,7 +118,39 @@ class JobController extends Controller
     {
         //
         $isSave = $job->isSaveByUserAlready();
-        return view('jobs.show', compact('job', 'isSave'));
+//        $jobBaseOnCategory = Job::query()->where('category_id', $job->category_id)
+//            ->whereDate('last_date', '>', date('Y-m-d'))
+//            ->where('status', 1)
+//            ->take(2)
+//            ->get();
+        $jobBaseOnCategory = Category::query()->find($job->category_id)->jobs()
+            ->whereDate('last_date', '>', date('Y-m-d'))
+            ->where('id', '<>', $job->id)
+            ->where('status', 1)
+            ->take(2)
+            ->get();
+
+//        $jobBaseOnCompany = Job::query()->where('company_id', $job->company_id)
+//            ->whereDate('last_date', '>', date('Y-m-d'))
+//            ->where('status', 1)
+//            ->take(2)
+//            ->get();
+
+        $jobBaseOnCompany = Company::query()->find($job->company_id)->jobs()
+            ->whereDate('last_date', '>', date('Y-m-d'))
+            ->where('id', '<>', $job->id)
+            ->where('status', 1)
+            ->take(2)
+            ->get();
+
+        $jobBaseOnPosition = Job::query()->where('position', "like", "%$job->position%")
+            ->whereDate('last_date', '>', date('Y-m-d'))
+            ->where('id', '<>', $job->id)
+            ->where('status', 1)
+            ->take(2)
+            ->get();
+        $jobsRecommend = $jobBaseOnCategory->merge($jobBaseOnCompany)->merge($jobBaseOnPosition)->unique('id');
+        return view('jobs.show', compact('job', 'isSave', 'jobsRecommend'));
     }
 
     /**
@@ -177,7 +210,7 @@ class JobController extends Controller
             $sender = auth()->user() ?? (new User())->fill(['name' => $data['name'], 'email' => $data['email']]);
             $job = Job::query()->findOrFail($request->jobId);
             $jobUrl = route('jobs.show', $job->slug);
-            Notification::route('mail', $request->emailPerson)->notify(new SendJobToFriendNotification($sender, $jobUrl, $job->position));
+            Notification::route('mail', $request->emailPerson)->notify(new SendJobToFriendNotification($sender, $jobUrl, $job->position, $request->namePerson));
             return response()->success([], 'Sent job successfully');
         }catch (\Throwable $ex) {
             return response()->error($ex->getMessage());
