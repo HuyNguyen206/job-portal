@@ -114,9 +114,9 @@
             </div>
         </div>
     </div>
-
+    @if($testimonial)
     @include('partials.testimonial')
-
+    @endif
 
     <div class="site-blocks-cover overlay inner-page"
          style="background-image: url({{asset('jobfinder/images/hero_1.jpg')}});" data-aos="fade"

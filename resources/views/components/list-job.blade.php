@@ -1,9 +1,12 @@
-
+@php
+    $user = auth()->user();
+@endphp
 <table class="table">
         <thead>
         <th></th>
         <th>Position</th>
         <th>Address</th>
+        <th>Status</th>
         <th>Date post</th>
         <th>Action</th>
         </thead>
@@ -25,11 +28,13 @@
 
                 </td>
                 <td><i class="icon fas fa-2x fa-map-marker-alt"></i>&nbsp;Address: {{$job->address}}</td>
+                <td>
+                    <a href="@if($user->isEmployer()) {{route('jobs.toggle-status', $job->slug)}} @else # @endif">
+                        <span class="badge @if($job->status) badge-success @else badge-warning @endif">{{$job->status ? 'live' : 'draft'}}</span>
+                    </a>
+                </td>
                 <td><i class="icon fas fa-2x fa-globe-asia"></i>&nbsp;Date: {{$job->created_at->diffForHumans()}}</td>
                 <td>
-                    @php
-                    $user = auth()->user();
-                    @endphp
                     <div class="btn-group">
                         @auth
                             @if ($user->isSeeker() && !$job->isApplied())

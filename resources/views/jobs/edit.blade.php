@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app-new')
 
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -116,7 +115,6 @@
 
         </div>
     </div>
-</div>
 @endsection
 @section('css')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

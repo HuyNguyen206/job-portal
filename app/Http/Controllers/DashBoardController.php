@@ -7,6 +7,8 @@ use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DashBoardController extends Controller
@@ -21,7 +23,7 @@ class DashBoardController extends Controller
 
     public function index()
     {
-        $posts = Post::query()->paginate(10);
+        $posts = Post::query()->latest()->paginate(10);
         return view('admin.post.index', compact('posts'));
     }
 
@@ -80,5 +82,35 @@ class DashBoardController extends Controller
     {
         $post->delete();
         return redirect()->route('dashboard')->with('success', 'Delete post successfully');
+    }
+
+    public function getTrashPost()
+    {
+        $trashPosts = Post::onlyTrashed()->paginate(10);
+        return view('admin.post.trash', compact('trashPosts'));
+    }
+
+    public function forceDeletePost($post)
+    {
+        $post = Post::onlyTrashed()->where('slug', $post)->first();
+        $post->forceDelete();
+        if(Storage::exists($post->image)) {
+            Storage::delete($post->image);
+        }
+        return redirect()->back()->with('success', 'Delete post permanent successfully');
+    }
+
+    public function restorePost($post)
+    {
+        $post = Post::onlyTrashed()->where('slug', $post)->first();
+        $post->restore();
+        return redirect()->back()->with('success', 'Restore post successfully');
+    }
+
+    public function toggleStatus(Post $post)
+    {
+        $post->status = !$post->status;
+        $post->save();
+        return redirect()->back()->with('success', 'Toggle post successfully');
     }
 }

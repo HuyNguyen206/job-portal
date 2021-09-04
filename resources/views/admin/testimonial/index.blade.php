@@ -8,38 +8,38 @@
         <div class="card">
             <div class="card-header">
                 Menu
-                <a href="{{route('dashboard.create')}}" class="btn btn-primary float-right">Create post</a>
+                <a href="{{route('testial.create')}}" class="btn btn-primary float-right">Create testimonial</a>
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">Stt</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Profession</th>
                         <th scope="col">Content</th>
+                        <th scope="col">Video</th>
                         <th scope="col">Created at</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse ($posts as $post)
+                    @forelse ($testimonials as $testimonial)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
-                            <td>{{$post->title}}</td>
-                            <td><a href="{{route('dashboard.toggleStatus', $post->slug)}}"><span class="badge p-2 {{$post->status ? "badge-success" : "badge-warning" }}">{{$post->status ? 'live' : 'draft'}}</span></a></td>
-                            <td><img src="{{Storage::url($post->image)}}" style="width: 200px" alt=""></td>
-                            <td>{{Str::limit($post->content, 30)}}</td>
-                            <td>{{$post->created_at->diffForHumans()}}</td>
+                            <td>{{$testimonial->name}}</td>
+                            <td>{{$testimonial->profession}}</td>
+                            <td>{{Str::limit($testimonial->content, 30)}}</td>
+                            <td>Video</td>
+                            <td>{{$testimonial->created_at->diffForHumans()}}</td>
                             <td>
                                 <div class="btn btn-group">
-                                    <a href="{{route('dashboard.edit', $post->slug)}}" class="btn btn-success">Edit</a>
-                                    <form id="post-{{$post->id}}" action="{{route('dashboard.delete', $post->slug)}}" method="post">
+                                    <a href="{{route('testial.edit', $testimonial->id)}}" class="btn btn-success">Edit</a>
+                                    <form id="testimonial-{{$testimonial->id}}" action="{{route('testial.delete', $testimonial->id)}}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>
-                                    <a onclick='event.preventDefault(); if(confirm("Do you want to delete this post?")) document.getElementById("{{'post-'.$post->id}}").submit()' class="btn btn-danger">Delete</a>
+                                    <a onclick='event.preventDefault(); if(confirm("Do you want to delete this testimonial?")) document.getElementById("{{'testimonial-'.$testimonial->id}}").submit()' class="btn btn-danger">Delete</a>
                                 </div>
 
                             </td>
@@ -47,7 +47,7 @@
                     @empty
                         <tr>
                             <td colspan="7">
-                                No post
+                                No testimonial
                             </td>
                         </tr>
                     @endforelse
@@ -60,7 +60,7 @@
     </div>
 </div>
     <div class="row">
-        {{$posts->links()}}
+        {{$testimonials->links()}}
     </div>
 
 @endsection

@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app-new')
 
 @section('content')
-    <div class="container">
         <div class="row">
             @forelse ($jobs  as $job)
             <div class="col-12">
@@ -28,13 +27,12 @@
                     </h2>
             @endforelse
         </div>
-    </div>
 @endsection
+
 @section('css')
     <style>
         .pagination{
-        justify-content: center;
+        text-align: center;
         }
     </style>
-
 @endsection

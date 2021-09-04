@@ -24,22 +24,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse ($posts as $post)
+                    @forelse ($trashPosts as $post)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$post->title}}</td>
-                            <td><a href="{{route('dashboard.toggleStatus', $post->slug)}}"><span class="badge p-2 {{$post->status ? "badge-success" : "badge-warning" }}">{{$post->status ? 'live' : 'draft'}}</span></a></td>
+                            <td><span class="badge p-2 {{$post->status ? "badge-success" : "badge-warning" }}">{{$post->status ? 'live' : 'draft'}}</span></td>
                             <td><img src="{{Storage::url($post->image)}}" style="width: 200px" alt=""></td>
                             <td>{{Str::limit($post->content, 30)}}</td>
                             <td>{{$post->created_at->diffForHumans()}}</td>
                             <td>
                                 <div class="btn btn-group">
-                                    <a href="{{route('dashboard.edit', $post->slug)}}" class="btn btn-success">Edit</a>
-                                    <form id="post-{{$post->id}}" action="{{route('dashboard.delete', $post->slug)}}" method="post">
+                                    <a href="{{route('dashboard.restorePost', $post->slug)}}" class="btn btn-success">Restore</a>
+                                    <form id="post-{{$post->id}}" action="{{route('dashboard.forceDelete', $post->slug)}}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>
-                                    <a onclick='event.preventDefault(); if(confirm("Do you want to delete this post?")) document.getElementById("{{'post-'.$post->id}}").submit()' class="btn btn-danger">Delete</a>
+                                    <a onclick='event.preventDefault(); if(confirm("Do you want to permanent delete this post?")) document.getElementById("{{'post-'.$post->id}}").submit()' class="btn btn-danger">Delete</a>
                                 </div>
 
                             </td>
@@ -60,7 +60,7 @@
     </div>
 </div>
     <div class="row">
-        {{$posts->links()}}
+        {{$trashPosts->links()}}
     </div>
 
 @endsection

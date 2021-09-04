@@ -217,5 +217,12 @@ class JobController extends Controller
         }
     }
 
+    public function toggleStatus(Job $job)
+    {
+        $job->status = !$job->status;
+        $job->save();
+        return redirect()->back()->with('success', 'Toggle job successfully');
+    }
+
 
 }

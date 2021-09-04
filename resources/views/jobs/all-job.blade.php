@@ -1,7 +1,6 @@
 @extends('layouts.app-new')
 
 @section('content')
-    <div class="container my-3">
         <div class="row">
             <form action="{{route('jobs.get-all-job')}}">
                 <div class="form-inline">
@@ -45,7 +44,6 @@
             @include('components.list-job')
         </div>
             {{$jobs->appends(request()->all())->onEachSide(5)->links()}}
-    </div>
 @endsection
 @section('css')
     <style>

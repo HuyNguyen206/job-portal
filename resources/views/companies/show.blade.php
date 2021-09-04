@@ -1,7 +1,6 @@
 @extends('layouts.app-new')
 
 @section('content')
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="company-profile">
@@ -48,6 +47,4 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
 @endsection

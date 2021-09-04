@@ -6,6 +6,7 @@ use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\TetimonialController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -38,6 +39,7 @@ Route::resource('jobs', JobController::class)->except('index', 'show');
 Route::get('jobs/detail/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::post('jobs/search-job', [JobController::class, 'searchJob']);
 Route::post('jobs/sent-to-friend', [JobController::class, 'sendToFriend'])->name('jobs.sent-to-friend');
+Route::get('jobs/toggle-status/{job}', [JobController::class, 'toggleStatus'])->name('jobs.toggle-status');
 Route::resource('companies', CompanyController::class);
 
 Route::get('categories/index/{category}', [CategoryController::class, 'index'])->name('categories.index');
@@ -58,3 +60,18 @@ Route::post('dashboard/posts', [DashBoardController::class, 'store'])->name('das
 Route::delete('dashboard/posts/{post}', [DashBoardController::class, 'delete'])->name('dashboard.delete');
 Route::get('dashboard/posts/{post}', [DashBoardController::class, 'edit'])->name('dashboard.edit');
 Route::put('dashboard/posts/{post}', [DashBoardController::class, 'update'])->name('dashboard.update');
+Route::get('dashboard/trash', [DashBoardController::class, 'getTrashPost'])->name('dashboard.trash');
+Route::delete('dashboard/posts/force-delete/{post}', [DashBoardController::class, 'forceDeletePost'])->name('dashboard.forceDelete');
+Route::get('dashboard/posts/restore/{slug}', [DashBoardController::class, 'restorePost'])->name('dashboard.restorePost');
+Route::get('dashboard/posts/toggle/{post}', [DashBoardController::class, 'toggleStatus'])->name('dashboard.toggleStatus');
+
+Route::get('home/posts/{post}', [HomeController::class, 'showPost'])->name('home.show-post');
+
+Route::get('dashboard/testimonials', [TetimonialController::class, 'index'])->name('testial');
+Route::get('dashboard/testimonials/create', [TetimonialController::class, 'create'])->name('testial.create');
+Route::post('dashboard/testimonials', [TetimonialController::class, 'store'])->name('testial.store');
+Route::delete('dashboard/testimonials/{testimonial}', [TetimonialController::class, 'delete'])->name('testial.delete');
+Route::get('dashboard/testimonials/{testimonial}', [TetimonialController::class, 'edit'])->name('testial.edit');
+Route::put('dashboard/testimonials/{testimonial}', [TetimonialController::class, 'update'])->name('testial.update');
+
+

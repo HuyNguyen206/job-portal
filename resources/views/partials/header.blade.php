@@ -83,11 +83,44 @@
                                                 @csrf
                                             </form>
                                         </li>
+                                            @if ($user->isEmployer())
+                                                <li class="nav-item">
+                                                    <a href="{{route('jobs.create')}}" class="btn btn-outline-success">Post a job</a>
+                                                </li>
+                                            @endif
+                                                <li>
 
-                                            <li>
-                                            <i class="fas fa-user"></i>
-                                            <span>{{auth()->user()->name}}</span>
-                                        </li>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            {{ $user->name }}
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="{{auth()->user()->user_type === 'seeker' ? route('profile') : route('companies.profile', $user->company->slug)}}">
+                                                                {{ __('Profile') }}
+                                                            </a>
+                                                            @if ($user->isEmployer())
+                                                                <a class="dropdown-item" href="{{route('jobs.my-job')}}">
+                                                                    {{ __('My job') }}
+                                                                </a>
+                                                            @else
+                                                                <a class="dropdown-item" href="{{route('jobs.saved-job')}}">
+                                                                    {{ __('My save job') }}
+                                                                </a>
+
+                                                            @endif
+                                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                                {{ __('Logout') }}
+                                                            </a>
+
+                                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                                @csrf
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
                                         @else
                                             <button type="button" class="btn bg-primary text-white py-3 px-4 rounded"
                                                     data-toggle="modal" data-target="#login">

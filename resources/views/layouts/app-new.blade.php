@@ -24,14 +24,16 @@
     <link rel="stylesheet" href="{{asset('jobfinder/css/aos.css')}}">
 
     <link rel="stylesheet" href="{{asset('jobfinder/css/style.css')}}">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     @yield('css')
 </head>
 <body>
 
 <div class="site-wrap" id="app">
     @include('partials.header')
-    @yield('content')
+    <div class="container my-3">
+        @yield('content')
+    </div>
     @include('partials.footer')
     @guest
         <login-form></login-form>
@@ -43,7 +45,7 @@
 <script src="{{asset('jobfinder/js/jquery-migrate-3.0.1.min.js')}}"></script>
 <script src="{{asset('jobfinder/js/jquery-ui.js')}}"></script>
 <script src="{{asset('jobfinder/js/popper.min.js')}}"></script>
-<script src="{{asset('jobfinder/js/bootstrap.min.js')}}"></script>
+{{--<script src="{{asset('jobfinder/js/bootstrap.min.js')}}"></script>--}}
 <script src="{{asset('jobfinder/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('jobfinder/js/jquery.stellar.min.js')}}"></script>
 <script src="{{asset('jobfinder/js/jquery.countdown.min.js')}}"></script>

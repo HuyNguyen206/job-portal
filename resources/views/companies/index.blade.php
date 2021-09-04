@@ -1,7 +1,6 @@
 @extends('layouts.app-new')
 
 @section('content')
-    <div class="container my-2">
         <div class="row">
             <div class="col-md-12">
                 <h2>All company</h2>
@@ -29,6 +28,5 @@
                     {{$companies->links()}}
                 </div>
         </div>
-    </div>
 
 @endsection

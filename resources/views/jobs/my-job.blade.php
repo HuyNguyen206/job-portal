@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app-new')
 
 @section('content')
-    <div class="container">
         <div class="row">
             <h1>
                 @php
@@ -11,5 +10,4 @@
             </h1>
             @include('components.list-job')
         </div>
-    </div>
 @endsection
